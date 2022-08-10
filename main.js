@@ -6,8 +6,6 @@ const imagemin = require('imagemin');
 
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
-const slash = require('slash');
-
 
 
 // Env & platform
@@ -44,7 +42,7 @@ ipcMain.on('image:minimize', (e, options) => {
 async function shrinkImage({ imgPath, quality, dest }) {
   const pngQuality = quality / 100;
   try {
-    const files = await imagemin([slash(imgPath)], {
+    const files = await imagemin([imgPath.replaceAll('\\', '/')], {
       destination: dest,
       plugins: [
         imageminMozjpeg({ quality }),
